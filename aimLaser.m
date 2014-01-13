@@ -1,10 +1,15 @@
-function aimLaser()
+function aimLaser(varargin)
 
     rigConfig;
     
+    if nargin < 1
+        stimulus.length = 10;   % sec
+    else
+        stimulus.length = varargin{1};
+    end
+    
     stimulus.name = 'aimLaser.m';
     stimulus.channels = [blueLaser];
-    stimulus.length = 10;               % sec
     stimulus.repRate     = 20; % Hz
     stimulus.dutyCycle   = 1;  % percent  
     stimulus.outputSampleRate = 200000;

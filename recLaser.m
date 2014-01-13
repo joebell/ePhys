@@ -36,13 +36,24 @@ function data = recLaser(expNum, stimulus)
     
     %% Wait for playback/recording to finish
 
-    fprintf('     Recording.');
+    fprintf('     Recording |');
     tic();
+    nCount = 1;
     while (toc < stimLength)
-       pause(.25);
-       fprintf('.');
+       pause(.1);
+       if (mod(nCount,10) == 0)
+           fprintf('|');
+       else
+           fprintf('.');
+       end
+       nCount = nCount + 1;
+       if nCount > 50
+           disp(' ');
+           fprintf('               ');
+           nCount = 0;
+       end
     end
-    disp('.');
+    disp('#');
     AI.wait();
     disp('     Stopped recording.');
 
