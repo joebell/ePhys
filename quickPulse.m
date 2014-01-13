@@ -5,8 +5,8 @@ function stimulus = quickPulse()
     %% Stimulus parameters
     stimulus.name = 'quickPulse.m';
     stimulus.channels = [blueLaser];
-    stimulus.preLength = 1; % sec
-    stimulus.postLength = 1; % sec
+    stimulus.preLength = .5; % sec
+    stimulus.postLength = .4; % sec
     stimulus.pulseLength = .1; % sec 
     stimulus.length = stimulus.preLength + stimulus.postLength + stimulus.pulseLength;
     stimulus.repRate     = 100; % Hz
@@ -32,22 +32,23 @@ function stimulus = quickPulse()
     lphpV = filtfilt(d2.sosMatrix,d2.ScaleValues,lpV);
       
     t = [1:length(data.V)]./data.sampleRate;
-    subplot(3,1,1);
+    subplot(2,1,1);
     cla;
     plot(t,lphpV); hold on;
     fill([0 0 stimulus.pulseLength stimulus.pulseLength]+stimulus.preLength,[ylim() fliplr(ylim())],...
-        'c','EdgeColor','none','FaceColor','c');
+        'c','EdgeColor','none','FaceColor','c','FaceAlpha',.5);
     plot(t,lphpV); hold on;
-
     xlim([0 stimulus.length]);
+    xlabel('Time (s)'); ylabel('mV');
     
-    subplot(3,1,2:3);
+    subplot(2,1,2);
     cla;
     plot(t,lpV); hold on;
     fill([0 0 stimulus.pulseLength stimulus.pulseLength]+stimulus.preLength,[ylim() fliplr(ylim())],...
-       'c','EdgeColor','none','FaceColor','c');
+       'c','EdgeColor','none','FaceColor','c','FaceAlpha',.5);
     plot(t,lpV); hold on;
     xlim([0 stimulus.length]);
+    xlabel('Time (s)'); ylabel('mV');
     
-    set(gcf,'Position',[366 315 560 420]);
+    set(gcf,'Position',[3 5 1020 730]);
     
