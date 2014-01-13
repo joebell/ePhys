@@ -33,6 +33,7 @@ function stimulus = quickPulse()
       
     t = [1:length(data.V)]./data.sampleRate;
     subplot(3,1,1);
+    cla;
     plot(t,lphpV); hold on;
     fill([0 0 stimulus.pulseLength stimulus.pulseLength]+stimulus.preLength,[ylim() fliplr(ylim())],...
         'c','EdgeColor','none','FaceColor','c');
@@ -41,9 +42,12 @@ function stimulus = quickPulse()
     xlim([0 stimulus.length]);
     
     subplot(3,1,2:3);
+    cla;
     plot(t,lpV); hold on;
     fill([0 0 stimulus.pulseLength stimulus.pulseLength]+stimulus.preLength,[ylim() fliplr(ylim())],...
        'c','EdgeColor','none','FaceColor','c');
     plot(t,lpV); hold on;
     xlim([0 stimulus.length]);
+    
+    set(gcf,'Position',[366 315 560 420]);
     
