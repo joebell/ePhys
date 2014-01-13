@@ -12,7 +12,7 @@ function fileName = dataStorage(expNum)
     dataPreamble = ['~/Desktop/Data/',dNum,...
         '/RL',dNum,'_',num2str(expNum,'%03d'),'_'];
     trialN = 1;
-    while( size(ls([dataPreamble,num2str(trialN,'%03d'),'.mat'])) > 0)
+    while( size(dir([dataPreamble,num2str(trialN,'%03d'),'.mat']),1) > 0)
         trialN = trialN + 1;
     end
     

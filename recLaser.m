@@ -26,21 +26,26 @@ function data = recLaser(expNum, stimulus)
     AO.addChannel(stimulus.channels);
     AO.setSampleRate(stimulus.outputSampleRate,size(stimulus.waveform,1));
     AO.putData(stimulus.waveform);  % NsampPerChan x length(channelList)
-    AO.start();                     % AO is triggered off of AI
+    AO.start();                     % AO is triggered off of AI  
     
+    %% Reset the DAQ on Exit, clean or not.
+    cleanObj = onCleanup(@() jDAQmxReset(devName));
+        
     %% Start acquisition
     AI.start();
     
     %% Wait for playback/recording to finish
+
     fprintf('     Recording.');
     tic();
     while (toc < stimLength)
-        pause(.25);
-        fprintf('.');
-    end 
+       pause(.25);
+       fprintf('.');
+    end
     disp('.');
     AI.wait();
     disp('     Stopped recording.');
+
     
     %% Get data from DAC
     dataStream = AI.getData;
@@ -55,8 +60,7 @@ function data = recLaser(expNum, stimulus)
         save(fileName,'data');
         disp(['Wrote to: ',fileName]);
     end
-    
-    %% Stop and clear objects
+
     AI.stop();
     AI.clear();
     AO.stop();

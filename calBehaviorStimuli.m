@@ -2,15 +2,18 @@ function calBehaviorStimuli(expNum)
 
     % Make a copy of this experiment's code
     archiveExpCode(expNum);
-    
-    sR = 200000;
+ 
+    rigConfig();
+
+    sR = 1000000;
+    stimulus.channels = [blueLaser];
     stimulus.outputSampleRate = sR; 
     stimulus.useStim = [1:8];
     stimulus.behaviorCMD      = [ 0,  4,  8, 16, 32, 64, 128, 240];   
     stimulus.repRate          = [20, 20, 20, 20, 20, 20, 20, 20];
     stimulus.nReps            = [ 4, 10,  9,  8,  7,  6,  5,  4];
     stimulus.rigIdealDC = rigDCfromBCMD(stimulus.behaviorCMD);
-    stimulus.rigCMD = round(stimulus.rigIdealDC.*sR.*.01);
+    stimulus.rigCMD = round(stimulus.rigIdealDC.*sR./stimulus.repRate);
  
     
     % Parameters for pulses
