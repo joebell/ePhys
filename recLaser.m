@@ -21,12 +21,19 @@ function data = recLaser(expNum, stimulus)
     NsampPerChan = round(stimLength*data.inputSampleRate);
     AI.setSampleRate(data.inputSampleRate,NsampPerChan);
     
-    %% Setup AO
+    %% Setup a dummy AO object outputing zeros, so DO can take its clock
     AO = analogOutput(devName);
-    AO.addChannel(stimulus.channels);
+    AO.addChannel(0);
     AO.setSampleRate(stimulus.outputSampleRate,size(stimulus.waveform,1));
-    AO.putData(stimulus.waveform);  % NsampPerChan x length(channelList)
-    AO.start();                     % AO is triggered off of AI  
+    AO.putData(zeros(size(stimulus.waveform,1),1));
+    AO.start();                     % AO is triggered off of AI
+    
+    %% Setup DO
+    DO = digitalOutput(devName);
+    DO.addChannel(stimulus.channels);
+    DO.setSampleRate(stimulus.outputSampleRate,size(stimulus.waveform,1));
+    DO.putData(sign(stimulus.waveform));  % NsampPerChan x length(channelList)
+    DO.start();                     % DO is triggered off of AI  
     
     %% Reset the DAQ on Exit, clean or not.
     cleanObj = onCleanup(@() jDAQmxReset(devName));
@@ -74,5 +81,6 @@ function data = recLaser(expNum, stimulus)
 
     AI.stop();
     AI.clear();
-    AO.stop();
-    AO.clear();
+    DO.stop();
+    DO.clear();
+  

@@ -18,8 +18,9 @@ telegraphModeInput = 6;
 recordingInputs = [scaledInput];
 telegraphInputs = [telegraphGainInput, telegraphModeInput];
 
-%% Outputs from DAQ
-blueLaser = 0;
+%% Digital Outputs from DAQ
+redLaser  = 0;
+blueLaser = 1;
 
 %% Useful Constants
 
