@@ -74,7 +74,8 @@ function data = recLaser(expNum, stimulus)
     
     %% Write data to disk
     if (expNum > 0)
-        fileName = dataStorage(expNum); 
+        prefixCode = 'RL';
+        fileName = getDataFileName(prefixCode,expNum); 
         save(fileName,'data');
         disp(['Wrote to: ',fileName]);
     end
